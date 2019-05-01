@@ -247,10 +247,10 @@ void Mesh::CreateRectangular(float w, float l, float h){
 void Mesh::CreateCircle( float r1, float r2, float h){
 	if (r1 < r2) 
 		return;
-	numFaces = 1.5*n -2;
+	numFaces = 1.5*n ;
 	int m = 4;
 	face = new Face[numFaces];
-	numVerts = 2*n;
+	numVerts = 2*n + 2;
 	pt = new Point3[numVerts];
 
 	int countFace = 0;
@@ -259,16 +259,16 @@ void Mesh::CreateCircle( float r1, float r2, float h){
 		face[i].vert = new VertexID[face[i].nVerts];
 	}
 
-	for (int i = 0; i < int(n/2) ; i++){
+	for (int i = 0; i <= int(n/2) ; i++){
 		float angle = 2 * PI * i * (1.0/n);
 		float x1 = r1 * cos(angle);
-		float y1 = r1 * sin(angle);
+		float z1 = r1 * sin(angle);
 		float x2 = r2 * cos(angle);
-		float y2 = r2 * sin(angle);
-		pt[m*i].set(x1,y1,h);
-		pt[m*i +1].set(x1,y1,0);
-		pt[m*i + 2].set(x2,y2,0);
-		pt[m*i + 3].set(x2,y2,h);
+		float z2 = r2 * sin(angle);
+		pt[m*i].set(x1,h,z1);
+		pt[m*i +1].set(x1,0,z1);
+		pt[m*i + 2].set(x2,0,z2);
+		pt[m*i + 3].set(x2,h,z2);
 
 		int k = 3*i ;
 		face[k].nVerts = 4;

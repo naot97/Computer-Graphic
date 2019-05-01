@@ -15,7 +15,8 @@ float heightWin = 600;
 Camera cam(7,1,9);
 
 // thong tin doi tuong
-Mesh	base, table, xylanh;
+Mesh	base, table, xylanh, rotor;
+Mesh	circle1, circle2, bar1,bar2;
 float value = 0.2;
 float hBase = 6;
 float rBase1 = 4;
@@ -25,13 +26,25 @@ float hXylanh = 4;
 float rXylanh = rBase2 * 0.6;
 float posXylanh = hBase * 0.8;
 
-float wTable = ;//x 
-float lTable = ;//z
-float hTable = ;//y
+float wTable = 10;//x 
+float lTable = 20;//z
+float hTable = 1;//y
+
+float rRotor = 4;
+float hRotor = 1;
+
+
+float rCircle1 = 2;
+float rCircle2 = 1;
+float hCircle = 1;
+float lBar = rCircle1 - rCircle2;
+float wBar = 3;
+float hBar = hCircle;
+
 
 // thong tin cach ve
 boolean drawFrame = 1;
-boolean drawColor = 0;
+boolean drawColor = 1;
 
 
 void drawAxis()
@@ -69,6 +82,39 @@ void drawTable(){
 	glPopMatrix();
 }
 
+void drawRotor(){
+	glPushMatrix();
+	glTranslatef(0,posXylanh + hXylanh + hTable,0);
+	rotor.Draw(drawFrame , drawColor);
+	glPopMatrix();
+}
+
+void drawOval(){
+	//glTranslatef(0,posXylanh + hXylanh + hTable + hRotor,0);
+
+	glPushMatrix();
+	glTranslatef(wBar / 2,0, 0);
+	glRotatef(90,0,1,0);
+	circle1.Draw(drawFrame , drawColor);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-wBar / 2,0, 0);
+	glRotatef(-90,0,1,0);
+	circle2.Draw(drawFrame , drawColor);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0,hBar/2, -lBar/2 -rCircle2);
+	bar1.Draw(drawFrame , drawColor);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0,hBar/2, lBar/2 + rCircle2);
+	bar2.Draw(drawFrame , drawColor);
+	glPopMatrix();
+}
+
 void myDisplay()
 {
 	glMatrixMode(GL_MODELVIEW);
@@ -78,10 +124,11 @@ void myDisplay()
 	glColor3f(0, 0, 1);
 	glViewport(0,0,widthWin,heightWin);
 	drawAxis();
-	drawBase();
-	drawXylanh();
-	drawTable();
-
+	//drawBase();
+	//drawXylanh();
+	//drawTable();
+	//drawRotor();
+	drawOval();
 	 
 
 
@@ -92,7 +139,7 @@ void myDisplay()
 
 void myInit()
 {
-	float	fHalfSize = 20;
+	float	fHalfSize = 10;
 
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
@@ -148,10 +195,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	float rBaseArr[] = {rBase1,rBase1,rBase2,rBase2};
 	float hXylanhArr[] = {hXylanh};
 	float rXylanhArr[] = {rXylanh, rXylanh};
+	float hRotorArr[] = {hRotor};
+	float rRotorArr[] = {rRotor, rRotor};
 
 	base.CreateCylinder2(4, hBaseArr, rBaseArr);
-	table.CreateRectangular(10,1,20);
+	table.CreateRectangular(wTable,hTable,lTable);
 	xylanh.CreateCylinder2(2, hXylanhArr, rXylanhArr);
+	rotor.CreateCylinder2(2,hRotorArr, rRotorArr);
+	circle1.CreateCircle(rCircle1, rCircle2, hCircle);
+	circle2.CreateCircle(rCircle1, rCircle2, hCircle);
+	bar1.CreateRectangular(wBar, hBar, lBar);
+	bar2.CreateRectangular(wBar, hBar, lBar);
 
 	myInit();
 	glutKeyboardFunc(changeView);
