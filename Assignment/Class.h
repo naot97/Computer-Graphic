@@ -134,6 +134,11 @@ public:
 		}
 		nVerts = 0;
 	}
+
+	void set(int numVert){
+		nVerts = numVert;
+		vert = new VertexID[numVert]; 
+	}
 };
 
 class Mesh
@@ -167,16 +172,18 @@ public:
 		numVerts = 0;
 		numFaces = 0;
 	}
+	void Draw(boolean hasFrame, boolean hasColor);
 	void DrawWireframe();
 	void DrawColor();
 
-	void CreateTetrahedron();
-	void CreateCube(float	fSize);
 	void CreateCylinder(float height,float radius);
 	void CreateRectangular(float length, float width, float height );
 	void CreateCylinder2(int face, float * h, float * r );
 	void CreateCircle( float r1, float r2, float h);
-	void Draw(boolean hasFrame, boolean hasColor);
+	void CreateCircle2(float r1, float r2, float w, float h);
+
+	static void AddRectangular(int& countPoint, int& countFace, Face* face );
+	
 };
 
 class Camera {
