@@ -1,15 +1,14 @@
-﻿Build started 07/05/2019 1:21:36 SA.
+﻿Build started 07/05/2019 9:29:56 CH.
      1>Project "C:\Users\toan\documents\visual studio 2010\Projects\Assignment\Assignment\Assignment.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Touching "Debug\Assignment.unsuccessfulbuild".
+         Creating "Debug\Assignment.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Assignment.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Assignment.cpp Class.cpp
-         Class.cpp
-     1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\class.cpp(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-         Generating Code...
-         Skipping... (no relevant changes detected)
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\Assignment.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Assignment.cpp
          Assignment.cpp
+     1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(6): warning C4067: unexpected tokens following preprocessor directive - expected a newline
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -30,4 +29,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.49
+Time Elapsed 00:00:01.60

@@ -176,13 +176,13 @@ public:
 	void DrawWireframe();
 	void DrawColor();
 
-	void CreateCylinder(float height,float radius);
-	void CreateRectangular(float length, float width, float height );
-	void CreateCylinder2(int face, float * h, float * r );
-	void CreateCircle( float r1, float r2, float h);
-	void CreateCircle2(float r1, float r2, float w, float h);
+	//void CreateCylinder(float height,float radius);
+	void CreateRectangular(float length, float width, float height, int color);
+	void CreateCylinder(int face, float * h, float * r , int color);
+	void CreateCircle( float r1, float r2, float h, int color);
+	void CreateCircle2(float r1, float r2, float w, float h, float hBase, int color);
 
-	static void AddRectangular(int& countPoint, int& countFace, Face* face );
+	static void AddRectangular(int countPoint, int& countFace, Face* face, int color );
 	
 };
 
