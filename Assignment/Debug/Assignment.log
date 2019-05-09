@@ -1,4 +1,4 @@
-﻿Build started 07/05/2019 9:29:56 CH.
+﻿Build started 10/05/2019 1:38:27 SA.
      1>Project "C:\Users\toan\documents\visual studio 2010\Projects\Assignment\Assignment\Assignment.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Assignment.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -9,6 +9,7 @@
      1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
      1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
      1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(6): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>c:\users\toan\documents\visual studio 2010\projects\assignment\assignment\assignment.cpp(279): warning C4805: '==' : unsafe mix of type 'boolean' and type 'bool' in operation
        ManifestResourceCompile:
          All outputs are up-to-date.
        Link:
@@ -29,4 +30,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.60
+Time Elapsed 00:00:01.50

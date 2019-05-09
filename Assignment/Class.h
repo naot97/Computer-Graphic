@@ -30,22 +30,6 @@ public:
 
 };
 
-class Point2
-{
-	public:
-		Point2() { x = y = 0.0f; } // constructor 1
-		Point2(float xx, float yy) { x = xx; y = yy; } // constructor 2
-		void set(float xx, float yy) { x = xx; y = yy; }
-		float getX() { return x;}
-		float getY() { return y;}
-		void draw()		{	glBegin(GL_POINTS);
-								glVertex2f((GLfloat)x, (GLfloat)y);
-							glEnd();
-						}
-	private:
-		float 	x, y;
-};
-
 class IntRect
 {
 	 public:
@@ -119,7 +103,7 @@ class Face
 public:
 	int		nVerts;
 	VertexID*	vert;
-	
+	Vector3		facenorm;
 	Face()
 	{
 		nVerts	= 0;
@@ -139,6 +123,7 @@ public:
 		nVerts = numVert;
 		vert = new VertexID[numVert]; 
 	}
+
 };
 
 class Mesh
@@ -176,14 +161,14 @@ public:
 	void DrawWireframe();
 	void DrawColor();
 
-	//void CreateCylinder(float height,float radius);
 	void CreateRectangular(float length, float width, float height, int color);
 	void CreateCylinder(int face, float * h, float * r , int color);
 	void CreateCircle( float r1, float r2, float h, int color);
 	void CreateCircle2(float r1, float r2, float w, float h, float hBase, int color);
 
 	static void AddRectangular(int countPoint, int& countFace, Face* face, int color );
-	
+	void CalculateFacesNorm();
+	void NormNewell(int facei);
 };
 
 class Camera {

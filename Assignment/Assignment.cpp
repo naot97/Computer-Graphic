@@ -1,9 +1,11 @@
-
+﻿
 #include "stdafx.h";
 #include<iostream>
 #include "math.h";
 #include "glut.h";
 #include "Class.h";
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 #pragma region var
@@ -13,8 +15,8 @@ float widthWin = 600;
 float heightWin = 600;
 
 //thong tin camera
-Camera cam(5,0,5);
-
+Camera cam(5,5,5);
+float	fHalfSize = 15;
 // thong tin doi tuong
 Mesh	base, table, xylanh, rotor;
 Mesh	circle, bar;
@@ -22,8 +24,8 @@ Mesh	slider;
 Mesh latch;
 Mesh shelf;
 float value = 0.5;
-float hBase = 6;
-float rBase1 = 3;
+float hBase = 5;
+float rBase1 = 2;
 float rBase2 = 1.5;
 
 float hXylanh = 4;
@@ -70,6 +72,10 @@ float tranXylanh = 0;
 float rTurn = wBar /2 ;
 float xTranRotor= rTurn * cos(3.1415926 * angleRotor / 180 );
 float zTranRotor= rTurn * sin(3.1415926 * angleRotor / 180);
+
+// dieu khien
+boolean automation = true;
+boolean isEnableLight1 = false;
 // thong tin cach ve
 boolean drawFrame = 0;
 boolean drawColor = 1;
@@ -218,35 +224,81 @@ void myDisplay()
 		drawSliders();
 		drawLatch();
 	glPopMatrix();
-
+	
 	drawRotor();
 	glFlush();
     glutSwapBuffers();
 }
 
+void changeLight1(){
+	isEnableLight1 = !isEnableLight1;
+	if (isEnableLight1)
+		glEnable(GL_LIGHT1);
+	else
+		glDisable(GL_LIGHT1);
+}
 
+void lightInit(){
+	glFrontFace(GL_CW   );
+	glEnable(GL_NORMALIZE);
+	
+	GLfloat	lightDiffuse[]={1.0f, 1.0f, 1.0f, 1.0f};
+	GLfloat	lightSpecular[]={1.0f, 1.0f, 1.0f, 1.0f};
+	GLfloat	lightAmbient[]={0.4, 0.4, 0.4, 1.0f};
 
-void myInit()
+	GLfloat 	light_position0[]={100.0f, 100.0f, 100.0f, 1};  
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position0);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE,	 lightDiffuse);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+
+	GLfloat 	light_position1[]={-100.0f, 100.0f, 100.0f, 1};  
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE,	 lightDiffuse);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, lightAmbient);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, lightSpecular);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0); 
+	
+	changeLight1();
+}
+
+void cameraInit()
 {
-	float	fHalfSize = 15;
-
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-	glFrontFace(GL_CCW);
 	glEnable(GL_DEPTH_TEST);
-
+	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho ( -fHalfSize, fHalfSize, -fHalfSize, fHalfSize, -1000,1000) ;
+	glOrtho(-fHalfSize, fHalfSize, -fHalfSize, fHalfSize, -1000.0, 1000);
+
 }
+
+void autoTurnRotor(int i){
+	if (automation == true) 
+	{
+		angleRotor += 5 * value;
+		xTranRotor= rTurn * cos(3.1415926 * angleRotor / 180);
+		zTranRotor= rTurn * sin(3.1415926 * angleRotor / 180);
+		glutPostRedisplay();
+		glutTimerFunc(20,autoTurnRotor,0);
+	}
+}
+
+
 
 void changeView(unsigned char key, int x, int y){
 	switch(key){
 	case '-':
-		cam.changeDis(-value);
+		//cam.changeDis(-value);
+		fHalfSize -= value;
+		cameraInit();
 		break;
 	case '+':
-		cam.changeDis(+value);
+		fHalfSize += value;
+		//cam.changeDis(+value);
+		cameraInit();
 		break;
 	case '1':
 		angleBase += 5 * value;
@@ -277,7 +329,15 @@ void changeView(unsigned char key, int x, int y){
 		drawFrame = !drawFrame;
 		drawColor = !drawColor;
 		break;
-
+	case 'a':
+	case 'A':
+		automation = !automation;
+		autoTurnRotor(0);
+		break;
+	case 'd':
+	case 'D':
+		changeLight1();
+		break;
 	}
 
 	xTranRotor= rTurn * cos(3.1415926 * angleRotor / 180);
@@ -303,6 +363,9 @@ void changeView2(int key, int x, int y)
 	}
 	glutPostRedisplay();
 }
+
+
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 
@@ -334,11 +397,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	latch.CreateCylinder(3, hLatchArr, rLatchArr,6);
 	shelf.CreateCircle2(rShelf1, rShelf2, lShelf, hShelf, 0.5, 7);
 
-	myInit();
 	glutKeyboardFunc(changeView);
-    glutDisplayFunc(myDisplay);
 	glutSpecialFunc(changeView2);
-	
+	lightInit();
+	cameraInit();	
+	glutDisplayFunc(myDisplay);
+	autoTurnRotor(0);
 	glutMainLoop();
 	return 0;
 }
